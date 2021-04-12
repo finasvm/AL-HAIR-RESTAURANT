@@ -1,0 +1,77 @@
+{% extends 'user/base.html'%}
+{% block content %}
+{% load static %}
+
+<div class="tab-content">
+    <div id="lg1" class="tab-pane active">
+        <div class="login-form-container">
+            <div class="login-register-form">
+                <form>
+                    <span>Enter the number</span>
+                    <input type="number" name="user-name" placeholder="mobile number" id="number_user">
+                    <span id="error1"></span>
+                    <div class="button-box">                           
+                        <button type="button" id="otp1"><span>Get OTP</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#otp1').click(function(){
+            var num = $('#number_user').val()
+            var num_length = $('#number_user').val().length
+            var data = {
+                'csrfmiddlewaretoken' : '{{csrf_token}}',
+                'number_user' : num,
+            
+            
+            }
+                if (num === "") {
+                    $('#error1').html("Enter number")
+                }
+                else if (num_length <10 || num_length > 10 ){
+                    $('#error1').html("Number should contain only 10 digits")
+                }
+                else{
+                    $.ajax({
+                        url:'/otp_starter/',
+                        method:'POST',
+                        data: data,
+                        dataType:'json',
+                        success:function(data){
+                            if (data =="true"){
+                                window.location.replace('/otp_finish/')
+                            }
+                            else if(data == "false"){
+                                $("#error1").html("Registered Number is wrong")
+                            }
+                            
+                        }
+                    })
+                }
+        
+        
+        })
+
+    </script>
+
+
+    {% endblock %}
+
+    var data = {
+        'filename1': fileName,
+    }
+    $.ajax({
+        url:'/updateprofile/',
+        method:'GET',
+        data: data,
+        dataType:'json',
+        success:function(data){
+            if (data =="true"){
+                window.location.replace('/profile/')
+            }
+        }
+    })
+});

@@ -1,0 +1,277 @@
+{% extends 'user/base.html'%}
+{% block content %}
+{% load static %}
+        <div class="login-register-area pt-95 pb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                        <div class="login-register-wrapper">
+                            <div class="login-register-tab-list nav">
+                                <a class="active" data-toggle="tab" href="#lg1">
+                                    <h4> login </h4>
+                                </a>
+                                <a data-toggle="tab" href="#lg2">
+                                    <h4> register </h4>
+                                </a>
+                            </div>
+                            <div class="tab-content">
+                                <div id="lg1" class="tab-pane active">
+                                    <div class="login-form-container">
+                                        <div class="login-register-form">
+                                            <form>
+                                                <span id="error1"></span>
+                                                <input type="text" name="user-name" placeholder="Username" id="username1">
+                                                <input type="password" name="user-password" placeholder="Password" id="password1">
+                                                   <div class="button-box">
+                                                    
+                                                      OR <br><br>
+                                                      <a href="{% url 'otp_starter' %}" style="color: blue;">click here</a> to login with OTP <br> <br>
+                                                       
+                                                    <button type="button" id="but2"><span>Login</span></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="lg2" class="tab-pane">
+                                    <div class="login-form-container">
+                                        <div class="login-register-form">
+                                            <form>
+                                                <span id="error2"></span>
+                                                <input type="text" name="user-name" placeholder="Username" id="username">
+                                                <input name="user-email" placeholder="Email" type="email" id="email">
+                                                <input name="user-email" placeholder="number" type="number" id="number">
+                                                <input type="password" name="user-password" placeholder="Password" id="password">
+                                                <input type="password" name="user-password" placeholder="confirm_Password" id="password_confirm">
+                                                <div class="button-box">
+                                                    <button type="button" id="but1"><span>Register</span></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<footer class="footer-area">
+            <div class="footer-top pt-80 pb-50 gray-bg-2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                            <div class="footer-widget mb-30">
+                                <div class="footer-info-wrapper">
+                                    <div class="footer-logo">
+                                        <a href="#">
+                                            <img src="{% static 'user2/assets/img/logo/logo-2.png' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <p>Lorem ipsum dolor sit amet, co adipisi elit, sed eiusmod tempor incididunt ut labore et dolore</p>
+                                    <div class="social-icon">
+                                        <ul>
+                                            <li><a href="#"><i class="icon-social-twitter"></i></a></li>
+                                            <li><a href="#"><i class="icon-social-instagram"></i></a></li>
+                                            <li><a href="#"><i class="icon-social-linkedin"></i></a></li>
+                                            <li><a href="#"><i class="icon-social-skype"></i></a></li>
+                                            <li><a href="#"><i class="icon-social-dribbble"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                            <div class="footer-widget mb-30 pl-50">
+                                <h4 class="footer-title">USEFUL LINKS</h4>
+                                <div class="footer-content">
+                                    <ul>
+                                        <li><a href="#">Help & Contact Us</a></li>
+                                        <li><a href="#">Returns & Refunds</a></li>
+                                        <li><a href="#">Online Stores</a></li>
+                                        <li><a href="#">Terms & Conditions</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-2 col-md-6 col-sm-6">
+                            <div class="footer-widget mb-30 pl-70">
+                                <h4 class="footer-title">HELP</h4>
+                                <div class="footer-content">
+                                    <ul>
+                                        <li><a href="#">Faq's </a></li>
+                                        <li><a href="#">Pricing Plans</a></li>
+                                        <li><a href="#">Order Traking</a></li>
+                                        <li><a href="#">Returns </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                            <div class="footer-widget">
+                                <div class="newsletter-wrapper">
+                                    <p>Subscribe to our newsletter and get 10% off your first purchase..</p>
+                                    <div class="newsletter-style">
+                                        <div id="mc_embed_signup" class="subscribe-form">
+                                            <form action="#" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                                                <div id="mc_embed_signup_scroll" class="mc-form">
+                                                    <input type="email" value="" name="EMAIL" class="email" placeholder="Your mail address" required>
+                                                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                                    <div class="mc-news" aria-hidden="true"><input type="text" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef" tabindex="-1" value=""></div>
+                                                    <div class="clear"><input type="submit" value="SEND" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="payment-img">
+                                    <a href="index.html">
+                                        <img src="{% static 'user2/assets/img/icon-img/payment.png' %}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom gray-bg-3 pt-17 pb-15">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="copyright text-center">
+                                <p>Copyright © <a href="#">Marten.</a> All Right Reserved.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</footer>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+        <script>
+            $('#but1').click(function () {
+                console.log('hwbdj')
+                var username = $('#username').val()
+                var email = $('#email').val()
+                var atposition = email.indexOf('@')
+                var dotposition = email.lastIndexOf('.')
+                var number = $('#number').val()
+                var password = $('#password').val()
+                var password_confirm = $('#password_confirm').val()
+        
+        
+                var data = {
+                    'csrfmiddlewaretoken': '{{csrf_token}}',
+                    'username': username,
+                    'email': email,
+                    'number': number,
+                    'password': password,
+                    'password_confirm': password_confirm
+        
+                }
+                if (username === "") {
+                    $('#error2').html("Enter Username")
+                }
+                else if (email === "") {
+                    $('#error2').html("Enter Email")
+                }
+                else if (atposition < 2 || dotposition < atposition + 2 || dotposition + 2 >= email.length) {
+                    $('#error2').html("Enter valid email")
+                }
+                else if (number === "") {
+                    $('#error2').html("Enter number")
+                }
+                else if (password === "") {
+                    $('#error2').html("Enter password")
+                }
+                else if (password_confirm === "") {
+                    $('#error2').html("Enter confirm password")
+                }
+        
+                else {
+                    $.ajax({
+                        url: '/signup/',
+                        method: 'POST',
+                        data: data,
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data == "true") {
+                                window.location.replace('/')
+                            }
+                            else if (data == 'false3') {
+                                $("#error2").html('Name already exist')
+        
+                            }
+                            else if (data == 'false4') {
+                                $("#error2").html('email already exist')
+        
+                            }
+                            else if (data == 'false5') {
+                                $("#error2").html('Number already exist')
+        
+                            }
+        
+                            else if (data == 'false') {
+                                $("#error2").html('password is mismatching')
+                            }
+        
+        
+        
+        
+                        }
+                    })
+                }
+            })
+        </script>
+
+
+        <script>
+        $('#but2').click(function(){
+            var name1 = $('#username1').val()
+            var pass1 = $('#password1').val()
+            var data = {
+                'csrfmiddlewaretoken' : '{{csrf_token}}',
+                'username' : name1,
+                'password' : pass1
+            
+            
+            }
+                if (name1 === "") {
+                    $('#error1').html("Enter username")
+                }
+                else if (pass1 === ""){
+                    $('#error1').html("Enter password")
+                }
+                else{
+                    $.ajax({
+                        url:'/login/',
+                        method:'POST',
+                        data: data,
+                        dataType:'json',
+                        success:function(data){
+                            if (data =="true"){
+                                window.location.replace('/')
+                            }
+                            else if(data == "false"){
+                                $("#error1").html("username and password is wrong")
+                            }
+                            else if(data == "block"){
+                                $("#error1").html("You are blocked")
+                            }
+                            
+                        }
+                    })
+                }
+        
+        
+        })
+        
+    </script> 
+
+
+    {% endblock %}           
+		
+		
+		
+		<!-- all js here -->

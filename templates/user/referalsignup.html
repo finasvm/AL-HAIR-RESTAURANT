@@ -1,0 +1,103 @@
+{% extends 'user/base.html'%}
+{% block content %}
+{% load static %}
+    <div id="lg2" class="tab-pane">
+        <div class="login-form-container">
+            <div class="login-register-form">
+                <form>
+                    <span id="error2"></span>
+                    <input type="text" name="user-name" placeholder="Username" id="username">
+                    <input name="user-email" placeholder="Email" type="email" id="email">
+                    <input name="user-email" placeholder="number" type="number" id="number">
+                    <input type="password" name="user-password" placeholder="Password" id="password">
+                    <input type="password" name="user-password" placeholder="confirm_Password" id="password_confirm">
+                    <div class="button-box">
+                        <button type="button" id="but1"><span>Register</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script>
+        $('#but1').click(function () {
+            console.log('hwbdj')
+            var username = $('#username').val()
+            var email = $('#email').val()
+            var atposition = email.indexOf('@')
+            var dotposition = email.lastIndexOf('.')
+            var number = $('#number').val()
+            var password = $('#password').val()
+            var password_confirm = $('#password_confirm').val() 
+    
+    
+            var data = {
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+                'username': username,
+                'email': email,
+                'number': number,
+                'password': password,
+                'password_confirm': password_confirm
+    
+            }
+            if (username === "") {
+                $('#error2').html("Enter Username")
+            }
+            else if (email === "") {
+                $('#error2').html("Enter Email")
+            }
+            else if (atposition < 2 || dotposition < atposition + 2 || dotposition + 2 >= email.length) {
+                $('#error2').html("Enter valid email")
+            }
+            else if (number === "") {
+                $('#error2').html("Enter number")
+            }
+            else if (password === "") {
+                $('#error2').html("Enter password")
+            }
+            else if (password_confirm === "") {
+                $('#error2').html("Enter confirm password")
+            }
+    
+            else {
+                console.log('hebhje')
+                $.ajax({
+                    url: '/referalsignup/',
+                    method: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data == "true") {
+                            window.location.replace('/')
+                        }
+                        else if (data == 'false3') {
+                            $("#error2").html('Name already exist')
+    
+                        }
+                        else if (data == 'false4') {
+                            $("#error2").html('email already exist')
+    
+                        }
+                        else if (data == 'false5') {
+                            $("#error2").html('Number already exist')
+    
+                        }
+    
+                        else if (data == 'false') {
+                            $("#error2").html('password is mismatching')
+                        }
+    
+    
+    
+    
+                    }
+                })
+            }
+        })
+    </script>
+    {% endblock %}
+
+
+

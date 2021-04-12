@@ -1,0 +1,175 @@
+{% extends 'admin/base1.html'%}
+{% block content %}
+{% load static %}
+{% block link %}
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"> 
+ <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css">
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">  -->
+{% endblock %}
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                
+                        <form action="/admin1/reporttable/" method="POST">
+                            {% csrf_token %}
+                            <div>
+                                <label for="dis">From</label>
+                            <input class="fromdate1"  type="date" onchange="from(event)" name="date1" min="2021-03-01" max="2021-06-01" id="date1"> 
+                        </div>
+                        <div class="mt-2"></div>
+                            <div class="justify-conent-left">
+                                <label for="dis">To</label>
+                                <input class="todate1" type="date" name="date2" min="2021-03-01" max="2021-06-01" id="todate"><br>
+                    
+                            </div>
+                            <div class="mt-2"></div>
+                                <div>
+                                    <button class="btn btn-primary" type="submit" >Search</button>
+                                </div>
+                            
+
+                        </form>
+                    
+
+                <div class="mt-5"></div>
+                    
+                                <div class="table-responsive">
+                                    <table id="report" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Username</th>
+                                                <th scope="col">Product</th>
+                                                <th scope="col">Address</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Payment Method</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Price</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for i in ordertable %}
+                                            <tr>
+                                                <td>{{i.user_order.user.username}}</td>
+                                                <td>{{i.Product.p_name}}</td>
+                                                <td>{{i.address.Full_name}},{{i.address.HouseName}},{{i.address.landMark}},{{i.address.city}},{{i.address.pinCode}}-{{i.address.state}}</td>
+                                                <td>{{i.Status}}</td>
+                                                <td>{{i.Qty}}</td>
+                                                <td>{{i.PaymentMethod}}</td>
+                                                <td>{{i.Date}}</td>
+                                                <td>{{i.Price}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+
+   <script>
+$(document).ready(function() {
+    $('#report').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+             'csv', 'excel', 'pdf', 
+        ],
+        drawCallback: function () {
+            var hasRows = this.api().rows({ filter: 'applied' }).data().length > 0;
+            $('.buttons-csv')[0].style.visibility = hasRows ? 'visible' : 'hidden'
+            $('.buttons-excel')[0].style.visibility = hasRows ? 'visible' : 'hidden'
+            $('.buttons-pdf')[0].style.visibility = hasRows ? 'visible' : 'hidden'
+        }
+
+    } );
+} );
+
+   </script>
+
+
+   <script>
+       function from(event){
+           var start_date = event.target.value
+           document.getElementById("todate").min=start_date
+       }
+   </script>
+
+<!-- <script>
+
+    function getselectvalue(id)
+    {
+        var selectedvalue = document.getElementById("list").value;
+        console.log(selectedvalue)
+        var data = {
+            'csrfmiddlewaretoken' : '{{csrf_token}}',
+            'selectValue' : selectedvalue,
+            'id':id
+        }
+        $.ajax({
+            url:'/admin1/orderchange/',
+            method:'POST',
+            data: data,
+            dataType:'json',
+            success:function(data){
+                if (data =="true"){
+                    window.location.replace('/admin1/orderlist/')
+                
+                }
+            }
+        })
+
+    }
+</script> -->
+{% endblock %}
+
+   

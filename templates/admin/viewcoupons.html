@@ -1,0 +1,85 @@
+{% extends 'admin/base1.html'%}
+{% load static %}
+{% block content %}
+{% block link %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+{% endblock %}
+<div class="container-xl">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#go">
+        Add offer
+      </button>
+      <div class="modal fade" id="go" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Offer Percentage</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="/admin1/viewcoupon/ "method="POST">
+               {%csrf_token%}
+              <input type="text" class="form-control" name="coupon_code" placeholder="Coupon code" >
+              <br>
+              <input type="text" class="form-control" name="offer_percentage" placeholder="Percentage">
+              <br>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    <div class="table-responsive">
+        <div class="table-wrapper">         
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Coupon_code</th>
+                            <th>Offer percentage</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in coupon %}
+                        <tr>
+                            <td>{{i.id}}</td>
+                            <td>{{i.Coupon_code}}</td>
+                            <td> {{i.Offer}}</td>
+                            <td> {{i.date}}</td>
+                            <td> {{i.Status}}</td>
+                            <td>
+                                <a  href="{% url 'delete_coupon' pk=i.id %}" class="btn btn-danger mr-2" >Delete</a>
+                            </td>
+                            
+                        
+                            
+                        </tr>
+                        {% endfor %}
+                      
+                        
+                        
+                        
+                       
+                    </tbody>
+                   
+        </div>
+        
+    </div>        
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+{% endblock %}

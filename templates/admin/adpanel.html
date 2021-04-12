@@ -1,0 +1,136 @@
+
+{% extends 'admin/base1.html'%}
+{% block content %}
+{% load static %}
+
+<style>
+
+    .chart {
+        border: 3px solid royalblue;
+      }
+
+</style>
+
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Sales chart -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                               <h4 class="card-title">Feeds</h4>
+                                <div class="feed-widget">
+                                    <ul class="list-style-none feed-body m-0 p-b-20">
+                                        <li class="feed-item">
+                                            <div class="feed-icon bg-info"><i class="ti-shopping-cart"></i></div>Total Order Recieved <span class="ml-auto font-12 text-muted">{{qty}}</span></li>
+                                        <li class="feed-item">
+                                            <div class="feed-icon bg-success"><i class="ti-shopping-cart"></i></div>Total Order Delivered<span class="ml-auto font-12 text-muted">{{qtydelivered}}</span></li>
+                                        <li class="feed-item">
+                                    </ul>   
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                               <h4 style="visibility: hidden;" class="card-title">eljlejd</h4>
+                                <div class="feed-widget">
+                                    <ul class="list-style-none feed-body m-0 p-b-20">
+                                        <li class="feed-item">
+                                            <div class="feed-icon bg-warning"><i class="ti-user"></i></div> Total Customers<span class="ml-auto font-12 text-muted">{{qtycustomers}}</span></li>
+                                        <li class="feed-item">
+                                            <div class="feed-icon bg-danger"><i class="ti-money"></i></div>Net Earnings<span class="ml-auto font-12 text-muted">{{totalsum}}</span></li>
+                                    
+                                    </ul>   
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 style="visibility: hidden;" class="card-title">ebdld</h4>
+                                <div class="feed-widget">
+                                    <ul class="list-style-none feed-body m-0 p-b-20">
+                                            <li class="feed-item">
+                                            <div class="feed-icon bg-danger"><i class="ti-money"></i></div>This year earnings<span class="ml-auto font-12 text-muted">{{revenueyear}}</span></li>
+                                        <li class="feed-item">
+                                            <div class="feed-icon bg-danger"><i class="ti-money"></i></div>Today's earnings<span class="ml-auto font-12 text-muted">{{revenuetoday}}</span></li>
+                                            <li class="feed-item">
+                                                <div class="feed-icon bg-danger"><i class="ti-money"></i></div>This month earnings<span class="ml-auto font-12 text-muted">{{revenuemonth}}</span></li>
+   
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- ============================================================== -->
+                <!-- Sales chart -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Table -->
+                <!-- ============================================================== -->
+                <div class="row">
+                <div class="col-md-6 ml-5">
+
+                    <h4>sales</h4>
+
+                    <canvas id="myChart1"></canvas>
+                    <!-- <script src="https://cdjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js"></script> -->
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js" integrity="sha512-dnUg2JxjlVoXHVdSMWDYm2Y5xcIrJg1N+juOuRi0yLVkku/g26rwHwysJDAMwahaDfRpr1AxFz43ktuMPr/l1A==" crossorigin="anonymous"></script>
+
+                    <script>
+                        var ctx1 = document.getElementById('myChart1')
+                        var myChart1 = new Chart(ctx1, {
+
+                            type: 'pie',
+
+                            data : {
+                                labels: [
+                                    'revenues_day ',
+                                    'revenue_month',
+                                    'total_revenue ',
+                                   
+                                    ],
+                                datasets: [{
+                                    label: 'My First Dataset',
+
+                                    data: [JSON.parse("{{revenuetoday }}"), JSON.parse("{{ revenuemonth }}"),JSON.parse("{{ totalsum }}"),],
+
+                                    backgroundColor: [
+                                    'rgb(0, 191, 255)',
+                                    'rgb(191, 255, 0)',
+                                    'rgb(255, 77, 77)',
+                                    'rgb(128, 0, 255)',
+
+                                    ],
+                                    hoverOffset: 2
+
+                                }]
+                                
+                            }
+                        });
+                    </script>
+                   
+           </div>
+           <div class="col-md-6">
+
+           </div>
+           </div>
+
+
+                
+
+        
+                
+{% endblock %}

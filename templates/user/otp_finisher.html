@@ -1,0 +1,58 @@
+{% extends 'user/base.html'%}
+{% block content %}
+{% load static %}
+
+<div class="tab-content">
+    <div id="lg1" class="tab-pane active">
+        <div class="login-form-container">
+            <div class="login-register-form">
+                <form>
+                    <span>Verify the OTP</span>
+                    <input type="number" name="user-name" placeholder="Enter the OTP" id="otp_num">
+                    <span id="error1"></span>
+                    <div class="button-box">                           
+                        <button type="button" id="otp2">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#otp2').click(function(){
+            var otp_num = $('#otp_num').val()
+            var data = {
+                'csrfmiddlewaretoken' : '{{csrf_token}}',
+                'otp_number' : otp_num,
+            
+            
+            }
+                if (otp_num === "") {
+                    $('#error1').html("Enter OTP number")
+                }
+                else{
+                    $.ajax({
+                        url:'/otp_finish/',
+                        method:'POST',
+                        data: data,
+                        dataType:'json',
+                        success:function(data){
+                            if (data =="true"){
+                                alert('Login successfull')
+                                window.location.replace('/')
+                            }
+                            else if(data == "false"){
+                                $("#error1").html("Entered OTP is wrong")
+                            }
+                            
+                        }
+                    })
+                }
+        
+        
+        })
+
+    </script>
+
+
+    {% endblock %}

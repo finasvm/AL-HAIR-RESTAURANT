@@ -1,0 +1,161 @@
+{% extends 'admin/base1.html'%}
+{% block content %}
+{% load static %}
+{% block link %}
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"> 
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">  -->
+{% endblock %}
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                                <div class="table-responsive">
+                                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Username</th>
+                                                <th scope="col">Product</th>
+                                                <th scope="col">Address</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Payment Method</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Edit status</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for i in order %}
+                                            <tr>
+                                                <td>{{i.user_order.user.username}}</td>
+                                                <td>{{i.Product.p_name}}</td>
+                                                <td>{{i.address.Full_name}},{{i.address.HouseName}},{{i.address.landMark}},{{i.address.city}},{{i.address.pinCode}}-{{i.address.state}}</td>
+                                                <td>{{i.Status}}</td>
+                                                <td>{{i.Qty}}</td>
+                                                <td>{{i.PaymentMethod}}</td>
+                                                <td>{{i.Date}}</td>
+                                                <td>{{i.Price}}</td>
+                                                <td>
+                                                    {% if i.Status == 'ordered' %}
+                                                    <button class="btn btn-primary level" type="button" data-list={{i.id}} value="shipped">Shipped</button>
+                                                     {% elif i.Status == 'shipped' %}
+                                                     <button class="btn btn-primary level" type="button" data-list={{i.id}} value='delivered'>Delivered</button>
+                                                     {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+    </script>
+
+
+        <script>
+
+            $(".level").click(function() {
+                var id1 = $(this).attr("data-list");
+                console.log(id1)
+                var val  =$(this).val();
+                console.log(val)
+                var data = {
+                'csrfmiddlewaretoken' : '{{csrf_token}}',
+                'Value' : val,
+                'id1':id1
+
+                }
+                $.ajax({
+                    url:'/admin1/orderchange/',
+                    method:'POST',
+                    data: data,
+                    dataType:'json',
+                    success:function(data){
+                        if (data =="true"){
+                            window.location.replace('/admin1/orderlist/')
+                        
+                        }
+                    }
+                })
+            })
+        </script>
+
+    {% endblock %} 
+
+<!-- <script>
+
+    function getselectvalue(id)
+    {
+        var selectedvalue = document.getElementById("list").value;
+        console.log(selectedvalue)
+        var data = {
+            'csrfmiddlewaretoken' : '{{csrf_token}}',
+            'selectValue' : selectedvalue,
+            'id':id
+        }
+        $.ajax({
+            url:'/admin1/orderchange/',
+            method:'POST',
+            data: data,
+            dataType:'json',
+            success:function(data){
+                if (data =="true"){
+                    window.location.replace('/admin1/orderlist/')
+                
+                }
+            }
+        })
+
+    }
+</script> -->
+
+
+   

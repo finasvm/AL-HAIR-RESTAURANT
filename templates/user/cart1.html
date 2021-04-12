@@ -1,0 +1,182 @@
+{% extends 'user/base.html'%}
+{% block content %}
+{% load static %}
+<style>
+    .center{
+        width: 150px;
+          margin: 40px auto;
+          
+        }
+</style>
+    
+    <!-- Mirrored from demo.hasthemes.com/marten-preview/marten-v1/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Mar 2021 01:23:17 GMT -->
+         <!-- shopping-cart-area start -->
+         {% if not proda %}
+         <div class="col-sm-12 text-center">
+         <h5>YOUR CART IS EMPTY</h5>
+         </div>
+         {% else %}
+        <div class="cart-main-area pt-95 pb-100">
+            <div class="container">
+                <h3 class="page-title">Your cart items</h3>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <form action="#">
+                            <div class="table-content table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>food Name</th>
+                                            <th>Until Price</th>
+                                            <th>Qty</th>
+                                            <th>Subtotal</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for proda in proda %}    
+                                        <tr>   
+                                            <td class="thumbnail-img">
+                                                <a href="#"><img src="{{proda.products.imageurl1}}" style="height: 10em;width: 10em;"></a>
+                                            </td>
+                                            <td style="text-align: center;" class="name-pr" id="qty4-{{proda.id}}" data-product ="{{proda.products.p_name}}"><a href="">{{proda.products.p_name}}</td>
+                                                {% if proda.products.p_cate.discount == 0 %}
+                                            <td style="text-align: center;" class="price-pr" id="price-{{proda.id}}" data-price ="{{proda.products.p_price}}"><p>{{proda.products.p_price}}</p></td>
+                                            {% else %}
+                                            <td style="text-align: center;" class="price-pr" id="price-{{proda.id}}" data-price ="{{proda.products.discountprice}}"><p>{{proda.products.discountprice}}</p></td>
+                                            {% endif %}
+                                        <td style="justify-content: center; padding-left: 3em;" class="qty-input">
+                                               <div>
+                                                <button class="btn btn-primary button" type="button"  data-cartid="{{proda.id}}">+</button>
+                                                 <input  class="form-control" type="number" name="qty" style="width: 3.90em;" value="{{proda.count}}" id="qty-{{proda.id}}" >
+                                                 <button class="btn btn-primary button" type="button"   data-cartid="{{proda.id}}">-</button>                                       
+                                                </div>
+                                             </td>
+                                            <td style="text-align: center;" class="total-pr">
+                                                <p data-total="{{proda.total_price}}" id="total-{{proda.id}}" value="total">
+                                                {{proda.total_price}}
+                                                </p>
+                                            </td>
+                                            <td class="product-remove"><i class="ti-trash" onclick="dele('{{proda.id}}')" style="color: red;"></i></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                            </div>  
+                            <div class="col-lg-4 col-md-6">
+                                
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="grand-totall">
+                                    <span value="{{sub_total}}">Subtotal:   {{sub_total}}</span>
+                                    <h5 value="{{grand_total}}">Grand Total:  {{grand_total}}</h5>
+                                    <a href="{% url 'checkout'  %}">Proceed To Checkout</a>
+                                    <p>Checkout with Multiple Addresses</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<footer class="footer-area">
+            
+            <div class="footer-bottom gray-bg-3 pt-17 pb-15">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="copyright text-center">
+                                 <p>Copyright © <a href="#">Marten.</a> All Right Reserved.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</footer>
+     
+        <script>
+
+            $(".button").on("click", function() {
+				var $button = $(this);
+				cartid = $(this).attr("data-cartid");
+				var oldValue = $('#qty-'+cartid).val();
+			
+				if ($button.text() == "+") {
+					var newVal = parseFloat(oldValue) + 1;
+				} else {
+					if (oldValue > 1) {
+						var newVal = parseFloat(oldValue) - 1;
+					} else {
+						newVal = 1;
+					}
+				}
+				$('#qty-'+cartid).val(newVal);
+				$("#here").load(" #here > *");
+			});
+
+            $(".button").click(function() {
+				var $button = $(this);
+				var cartid = $(this).attr("data-cartid");
+				var qty = $('#qty-'+cartid).val();
+				var price = $('#price-'+cartid).attr("data-price");
+				var total = qty *price;
+				document.getElementById('total-'+cartid).innerHTML = total;
+                window.location.replace("/procart/")
+
+
+
+				
+			
+				var data = {
+				'qty' : qty,
+				'cartid' : cartid,
+				}
+				$.ajax({
+					url:'/updatecart/',
+					method:'POST',
+					data: data,
+					success:function(data){
+						if (data == 'true'){
+							window.location.replace('/procart/')
+						}
+					}
+				});
+			});
+        </script>
+
+        <script>
+ 
+            function dele(id){
+                console.log('jbhchw')
+                var f = confirm("Do you want to delete")
+                if (f == true){
+                $.ajax({
+                    url: '/cart_delete/'+id+ '/',
+                    method:'POST',
+                    success: function (data) {
+                    if (data == 'true') {
+                     window.location.replace('/procart/')
+                    }
+                }
+                  
+                })
+            }
+            } 
+
+        </script>
+
+        {% endif %}
+           
+            
+        
+		
+		<!-- all js here -->
+    {% endblock %}
+
+<!-- Mirrored from demo.hasthemes.com/marten-preview/marten-v1/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 16 Mar 2021 01:23:17 GMT -->
+
